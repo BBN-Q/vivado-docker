@@ -9,7 +9,7 @@ Vivado installed into a docker image for CI purposes.
 2. Potentialy modify the `install_config.txt` to change the install options.
 3. Build the image (will take about 10 minutes)
     ```shell
-    docker build -t caryan/vivado:2015.3 .
+    docker build -t caryan/vivado:2016.1 .
     ```
 
 ## Running
