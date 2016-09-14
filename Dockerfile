@@ -20,8 +20,7 @@ RUN apt-get update && apt-get install -y \
   libfontconfig \
   git
 
-#Copy in Vivado installer and config file
-# TODO: is there any way to save image size here?
+#Copy in config file and ssh private key
 COPY install_config.txt /
 COPY id_rsa /
 
