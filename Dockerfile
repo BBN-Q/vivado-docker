@@ -29,7 +29,8 @@ ARG HOST_LOGIN
 RUN ssh -oStrictHostKeyChecking=no ${HOST_LOGIN} -i id_rsa "cat ~/Downloads/Xilinx_Vivado_SDK_2016.1_0409_1.tar.gz -" | tar xzv && \
   /Xilinx_Vivado_SDK_2016.1_0409_1/xsetup --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA --batch Install --config install_config.txt && \
   rm -rf Xilinx_Vivado_SDK_2016.1_0409_1 && \
-  rm id_rsa
+  rm id_rsa && \
+  rm /root/.ssh/known_hosts
 
 #make a Vivado user
 RUN adduser --disabled-password --gecos '' vivado
