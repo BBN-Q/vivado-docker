@@ -2,6 +2,9 @@ FROM ubuntu:14.04
 
 MAINTAINER Colm Ryan <cryan@bbn.com>
 
+# build with docker build --build-arg HOST_LOGIN=user@host --rm -t vivado .
+
+
 #install dependences for:
 # * xsim (gcc build-essential to also get make)
 # * MIG tool (libglib2.0-0 libsm6 libxi6 libxrender1 libxrandr2 libfreetype6 libfontconfig)
@@ -19,11 +22,15 @@ RUN apt-get update && apt-get install -y \
 
 #Copy in Vivado installer and config file
 # TODO: is there any way to save image size here?
-ADD Xilinx_Vivado_SDK_2016.1_0409_1.tar.gz /
-COPY install_config.txt /Xilinx_Vivado_SDK_2016.1_0409_1/
+COPY install_config.txt /
+COPY id_rsa /
 
 #run the install
-RUN /Xilinx_Vivado_SDK_2016.1_0409_1/xsetup --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA --batch Install --config /Xilinx_Vivado_SDK_2016.1_0409_1/install_config.txt
+ARG HOST_LOGIN
+RUN ssh -oStrictHostKeyChecking=no ${HOST_LOGIN} -i id_rsa "cat ~/Downloads/Xilinx_Vivado_SDK_2016.1_0409_1.tar.gz -" | tar xzv && \
+  /Xilinx_Vivado_SDK_2016.1_0409_1/xsetup --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA --batch Install --config install_config.txt && \
+  rm -rf Xilinx_Vivado_SDK_2016.1_0409_1 && \
+  rm id_rsa
 
 #make a Vivado user
 RUN adduser --disabled-password --gecos '' vivado
