@@ -4,14 +4,16 @@ Vivado installed into a docker image for CI purposes.
 
 ## Build instructions
 
-1. This docker file assumes your Vivado installer is available on a host a ~/Downloads/Xilinx_Vivado_SDK_2016.1_0409_1.tar.gz
-2. Create a password-less ssh rsa key `ssh-keygen -t rsa`
-3. Copy resulting private key (`~/.ssh/id_rsa`) into the directory
-4. Copy your Vivado `Xilinx.lic` file into the directory.
-5. Potentialy modify the `install_config.txt` to change the install options.
-6. Build the image (will take about 10 minutes) passing in a build arg
+1. This docker file assumes the Vivado download is available on a webserver somewhere. This can easily be the build machine using the webserver in Python.
     ```shell
-    docker build --build-arg HOST_LOGIN=user@host --rm -t vivado:2016.1 .
+    cd /path/to/Vivado/download
+    python -m http.server
+    ```
+2. Copy your Vivado `Xilinx.lic` file into the directory.
+3. Potentialy modify the `install_config.txt` to change the install options.
+4. Build the image (will take about 10 minutes) passing in a build arg
+    ```shell
+    docker build --build-arg HOST=HOST_NAME:8000 -t vivado:2016.1 .
     ```
 
 ## Running
