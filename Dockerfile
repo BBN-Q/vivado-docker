@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 
 MAINTAINER Colm Ryan <cryan@bbn.com>
 
-# build with docker build --build-arg HOST=host:port --rm -t vivado .
+# build with docker build --build-arg VIVADO_TAR_HOST=host:port -t vivado .
 
 #install dependences for:
 # * downloading Vivado (wget)
