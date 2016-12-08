@@ -13,7 +13,7 @@ Vivado installed into a docker image for CI purposes.
 3. Potentialy modify the `install_config.txt` to change the install options.
 4. Build the image (will take about 10 minutes) passing in a build arg
     ```shell
-    docker build --build-arg HOST=HOST_NAME:8000 -t vivado:2016.1 .
+    docker build --build-arg VIVADO_TAR_HOST=host_ip:8000 --build-arg VIVADO_TAR_FILE=Xilinx_Vivado_SDK_2016.3_1011_1 -t vivado:2016.3 .
     ```
 
 ## Running

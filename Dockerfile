@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 
 MAINTAINER Colm Ryan <cryan@bbn.com>
 
-# build with docker build --build-arg VIVADO_TAR_HOST=host:port -t vivado .
+# build with docker build --build-arg VIVADO_TAR_HOST=host:port --build-arg VIVADO_TAR_FILE=Xilinx_Vivado_SDK_2016.3_1011_1 -t vivado .
 
 #install dependences for:
 # * downloading Vivado (wget)
@@ -26,13 +26,13 @@ COPY install_config.txt /
 
 # download and run the install
 ARG VIVADO_TAR_HOST
-RUN echo "Downloading Vivado from ${VIVADO_TAR_HOST}" && \
-  wget ${VIVADO_TAR_HOST}/Xilinx_Vivado_SDK_2016.1_0409_1.tar.gz -q && \
+ARG VIVADO_TAR_FILE
+RUN echo "Downloading ${VIVADO_TAR_FILE} from ${VIVADO_TAR_HOST}" && \
+  wget ${VIVADO_TAR_HOST}/${VIVADO_TAR_FILE}.tar.gz -q && \
   echo "Extracting Vivado tar file" && \
-  tar xzf Xilinx_Vivado_SDK_2016.1_0409_1.tar.gz && \
-  /Xilinx_Vivado_SDK_2016.1_0409_1/xsetup --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA --batch Install --config install_config.txt && \
-  rm -rf Xilinx_Vivado_SDK_2016.1_0409_1*
-
+  tar xzf ${VIVADO_TAR_FILE}.tar.gz && \
+  /${VIVADO_TAR_FILE}/xsetup --agree 3rdPartyEULA,WebTalkTerms,XilinxEULA --batch Install --config install_config.txt && \
+  rm -rf ${VIVADO_TAR_FILE}*
 #make a Vivado user
 RUN adduser --disabled-password --gecos '' vivado
 USER vivado
