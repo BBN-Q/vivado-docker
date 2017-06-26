@@ -27,6 +27,7 @@ COPY install_config.txt /
 # download and run the install
 ARG VIVADO_TAR_HOST
 ARG VIVADO_TAR_FILE
+ARG VIVADO_VERSION
 RUN echo "Downloading ${VIVADO_TAR_FILE} from ${VIVADO_TAR_HOST}" && \
   wget ${VIVADO_TAR_HOST}/${VIVADO_TAR_FILE}.tar.gz -q && \
   echo "Extracting Vivado tar file" && \
@@ -38,7 +39,7 @@ RUN adduser --disabled-password --gecos '' vivado
 USER vivado
 WORKDIR /home/vivado
 #add vivado tools to path
-RUN echo "source /opt/Xilinx/Vivado/2016.3/settings64.sh" >> /home/vivado/.bashrc
+RUN echo "source /opt/Xilinx/Vivado/${VIVADO_VERSION}/settings64.sh" >> /home/vivado/.bashrc
 
 #copy in the license file
 RUN mkdir /home/vivado/.Xilinx
